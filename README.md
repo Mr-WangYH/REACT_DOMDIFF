@@ -1,4 +1,5 @@
-# React Fiber
+# React Fiber （react 17）
+[如何调试react源码](https://juejin.cn/post/7168821587251036167#heading-8)
 
 ## React架构
 - Scheduler (调度层): 调度任务的优先级，高优任务优先进入协调器
@@ -15,7 +16,7 @@
 我们知道，在浏览器中，页面是一帧一帧绘制出来的，渲染的帧率与设备的刷新率保持一致。一般情况下，设备的屏幕刷新率为60次/1s，当每秒内绘制的帧数超过60时，页面渲染是流畅的，而当每秒内绘制的帧数小于60时，会出现一定程度的卡顿现象。
 在两个执行帧之间，主线程通常会有一小段空闲时间，在这个空闲时间可以触发 requestIdleCallback 方法，而 React 就是利用浏览器提供的requestIdleCallback API，将任务插入到浏览器的空闲时间段中执行，浏览器执行完这个方法后，如果没有剩余时间了，或者已经没有下一个可执行的任务了，React应该归还控制权，并同样使用requestIdleCallback去申请下一个时间片，从而避免长时间阻塞主线程，保证页面的流畅性。
 
-但使用 requestIdleCallback 它自身也存在一些问题，比如说并不是所有的浏览器都支持它，而且它的触发频率也不是很稳定，所以 React最终放弃了 requestldleCallback 的使用。在 React 中，官方实现了自己的任务调度库，这个库就叫做 Scheduler。它也可以实现在浏览器空闲时执行任务，而且还可以设置任务的优先级，高优先级任务先执行，低优先级任务后执行。
+但使用 requestIdleCallback 它自身也存在一些问题，比如说并不是所有的浏览器都支持它，而且它的触发频率也不是很稳定，所以 React最终放弃了 requestIdleCallback 的使用。在 React 中，官方实现了自己的任务调度库，这个库就叫做 Scheduler。它也可以实现在浏览器空闲时执行任务，而且还可以设置任务的优先级，高优先级任务先执行，低优先级任务后执行。
 
 ## Fiber
 ### 什么是Fiber
@@ -412,7 +413,7 @@ function performSyncWorkOnRoot(root) {
   let lanes;
   let exitStatus;
   // 说明 workInProgressRoot 不存在，说明还没有构建 workInProgress Fiber树
-  // workInProaressRoot 为全局变量 默认值为null，初始渲染时值为 null
+  // workInProgressRoot 为全局变量 默认值为null，初始渲染时值为 null
   if (
     root === workInProgressRoot &&
     includesSomeLane(root.expiredLanes, workInProgressRootRenderLanes)
@@ -709,7 +710,7 @@ function ChildReconciler(shouldTrackSideEffects) {
     let resultingFirstChild: Fiber | null = null;
     // 上一次创建的 fiber 对象
     let previousNewFiber: Fiber | null = null;
-    // 初始渲染没有旧的子级，所以为 努力了
+    // 初始渲染没有旧的子级，所以为 null
     let oldFiber = currentFirstChild;
     let lastPlacedIndex = 0;
     let newIdx = 0;

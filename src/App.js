@@ -1,13 +1,16 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const App = () => {
   const [num, setNum] = useState(1);
+
   const handleClick = () => {
     debugger;
-    setNum((a) => {
-      return a + 1;
+    setNum(num + 1);
+    setNum((n) => {
+      return n + 3;
     });
   };
+
   return (
     <>
       <div key='title' id='title'>

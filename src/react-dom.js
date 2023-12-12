@@ -1,6 +1,7 @@
 import { creatFiberRoot } from './ReactFiberRoot';
 import { updateContainer } from './ReactFiberReconciler';
 
+// react 17 源码
 function render(element, container) {
   // 创建一个fiberRoot,其实就是指向我们的div#root这个容器
   let fiberRoot = container._reactRootContainer;
